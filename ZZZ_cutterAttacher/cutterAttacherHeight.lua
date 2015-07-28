@@ -7,8 +7,10 @@
 --
 --***************************************************************
 
-source(Utils.getFilename("mogliBase20.lua", g_currentModDirectory))
-mogliBase20.newClass( "CutterAttacherHeight" )
+--***************************************************************
+source(Utils.getFilename("mogliBase.lua", g_currentModDirectory))
+_G[g_currentModName..".mogliBase"].newClass( "CutterAttacherHeight" )
+--***************************************************************
 
 function CutterAttacherHeight.prerequisitesPresent(specializations) 
 	return true
