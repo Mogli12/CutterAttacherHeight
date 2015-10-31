@@ -1,4 +1,4 @@
-del ZZZ_realisticYield.zip
-cd ZZZ_realisticYield
-"C:\Program Files\WinRAR\winrar" A -r ..\ZZZ_realisticYield.zip *.*
+del ZZZ_cutterAttacher.zip
+cd ZZZ_cutterAttacher
+"C:\Program Files\WinRAR\winrar" A -r ..\ZZZ_cutterAttacher.zip *.*
 cd ..
