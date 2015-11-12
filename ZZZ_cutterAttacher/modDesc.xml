@@ -3,13 +3,15 @@
 	<author>Mogli aka Biedens</author>
 	<title>
 		<en>Automatic height control of attached cutters</en>
-		<de>Automatische Schneidwerkshöhenkontrolle</de> 
+		<de>Automatische Schneidwerkshöhenkontrolle</de>
+		<pl>Automatyczna kontorla wysokości podczepionych hederów</pl>
 	</title>
 	<description>
 		<en>Automatic height control of attached cutters
 		</en>
 		<de>Automatische Schneidwerkshöhenkontrolle
 		</de>
+		<pl>Automatyczna kontorla wysokości podczepionych hederów</pl>
 	</description>
 	<multiplayer supported="true"/>   
 	<iconFilename>store.dds</iconFilename>
@@ -17,23 +19,28 @@
 	<l10n>
 		<text name="ZZZ_CAH_VERSION">
 			<en>cutter height control v1.0</en>
-			<de>Schneidwerkshöhenkontrolle v1.0</de>			
+			<de>Schneidwerkshöhenkontrolle v1.0</de>
+			<pl>Kontorla wysokości hederu v1.0</pl>
 		</text>		
 		<text name="ZZZ_CAH_OFF">
 			<en>cutter height [normal]</en>
-			<de>Schneidwerkshöhe [normal]</de>			
+			<de>Schneidwerkshöhe [normal]</de>
+			<pl>Wysokość hederu [normalna]</pl>
 		</text>		
 		<text name="ZZZ_CAH_ON">
 			<en>cutter height [auto]</en>
-			<de>Schneidwerkshöhe [auto]</de>			
+			<de>Schneidwerkshöhe [auto]</de>
+			<pl>Wysokość hederu [auto]</pl>
 		</text>		
 		<text name="ZZZ_CAH_DOWN">
 			<en>cutter down (%0.2f)</en>
-			<de>Schneidwerk tiefer (%0.2f)</de>			
+			<de>Schneidwerk tiefer (%0.2f)</de>
+			<pl>Heder w dół (%0.2f)</pl>
 		</text>		
 		<text name="ZZZ_CAH_UP">
 			<en>cutter up (%0.2f)</en>
-			<de>Schneidwerk höher (%0.2f)</de>			
+			<de>Schneidwerk höher (%0.2f)</de>
+			<pl>Heder w górę (%0.2f)</pl>
 		</text>		
 	</l10n>
 	<inputBindings>		
