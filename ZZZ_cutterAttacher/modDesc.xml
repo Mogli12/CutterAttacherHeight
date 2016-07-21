@@ -15,12 +15,12 @@
 	</description>
 	<multiplayer supported="true"/>   
 	<iconFilename>store.dds</iconFilename>
-	<version>1.0.0.2</version>
+	<version>1.1.0.0</version>
 	<l10n>
 		<text name="ZZZ_CAH_VERSION">
-			<en>cutter height control v1.0</en>
-			<de>Schneidwerkshöhenkontrolle v1.0</de>
-			<pl>Kontorla wysokości hederu v1.0</pl>
+			<en>cutter height control v1.1</en>
+			<de>Schneidwerkshöhenkontrolle v1.1</de>
+			<pl>Kontorla wysokości hederu v1.1</pl>
 		</text>		
 		<text name="ZZZ_CAH_OFF">
 			<en>cutter height [normal]</en>
