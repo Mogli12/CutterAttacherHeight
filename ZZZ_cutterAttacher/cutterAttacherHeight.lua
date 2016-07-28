@@ -34,6 +34,8 @@ function CutterAttacherHeight:load(xmlFile)
 	self.cutterAttacherHeightBaseHeight    = nil
 	self.cutterAttacherHeightMinHeight     = -0.20
 	self.cutterAttacherHeightMaxHeight     =  0.50
+	self.cutterAttacherHeightMinAlpha      = -0.20
+	self.cutterAttacherHeightMaxAlpha      =  1.2
 
 end
 
@@ -89,9 +91,9 @@ function CutterAttacherHeight:update(dt)
 	end 
 	if CutterAttacherHeight.showKeys2( self ) then
 		if     InputBinding.isPressed(InputBinding.ZZZ_CAH_UP) then
-			CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightControlDelta2", math.max(self.cutterAttacherHeightControlDelta2-0.005, 0))
+			CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightControlDelta2", math.max(self.cutterAttacherHeightControlDelta2-0.005, self.cutterAttacherHeightMinAlpha))
 		elseif InputBinding.isPressed(InputBinding.ZZZ_CAH_DOWN) then
-			CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightControlDelta2", math.min(self.cutterAttacherHeightControlDelta2+0.005, 1))
+			CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightControlDelta2", math.min(self.cutterAttacherHeightControlDelta2+0.005, self.cutterAttacherHeightMaxAlpha))
 		end 
 	end
 
@@ -163,7 +165,7 @@ function CutterAttacherHeight:update(dt)
 					
 					local diff = self.cutterAttacherHeightBaseHeight + self.cutterAttacherHeightControlDelta - t / n --tMin
 					if math.abs( diff ) > eps then
-						jointDesc.lowerAlpha = Utils.clamp( jointDesc.lowerAlpha - Utils.clamp(diff * factor,-delta,delta), 0, 1)
+						jointDesc.lowerAlpha = Utils.clamp( jointDesc.lowerAlpha - Utils.clamp(diff * factor,-delta,delta), self.cutterAttacherHeightMinAlpha, self.cutterAttacherHeightMaxAlpha )
 						CutterAttacherHeight.updateJointDesc( self, self.attacherVehicle, jointDesc, dt )
 					end
 				end
@@ -172,7 +174,7 @@ function CutterAttacherHeight:update(dt)
 		
 		if not self.cutterAttacherHeightIsLowered then
 			if math.abs( jointDesc.upperAlpha - self.cutterAttacherHeightControlDelta2 ) > 1E-3 then
-				jointDesc.upperAlpha = Utils.clamp( self.cutterAttacherHeightControlDelta2, 0, 1)
+				jointDesc.upperAlpha = Utils.clamp( self.cutterAttacherHeightControlDelta2, self.cutterAttacherHeightMinAlpha, self.cutterAttacherHeightMaxAlpha )
 				CutterAttacherHeight.updateJointDesc( self, self.attacherVehicle, jointDesc, dt )
 			end
 		end
