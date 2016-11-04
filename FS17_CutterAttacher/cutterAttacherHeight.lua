@@ -22,7 +22,7 @@ end
 ------------------------------------------------------------------------
 -- load
 ------------------------------------------------------------------------
-function CutterAttacherHeight:load(xmlFile)
+function CutterAttacherHeight:load(saveGame)
 
 	CutterAttacherHeight.registerState( self, "cutterAttacherHeightControlToggle", true, CutterAttacherHeight.onToggle )
 	CutterAttacherHeight.registerState( self, "cutterAttacherHeightControlDelta", 0, nil, "float32" )
@@ -35,7 +35,7 @@ function CutterAttacherHeight:load(xmlFile)
 	self.cutterAttacherHeightMinHeight     = -0.20
 	self.cutterAttacherHeightMaxHeight     =  0.50
 	self.cutterAttacherHeightMinAlpha      = -0.20
-	self.cutterAttacherHeightMaxAlpha      =  1.2
+	self.cutterAttacherHeightMaxAlpha      =  1.0
 
 end
 
@@ -75,6 +75,11 @@ end
 ------------------------------------------------------------------------
 function CutterAttacherHeight:update(dt)
 
+	if     self.cutterAttacherHeightControlDelta2 == nil
+			or self.cutterAttacherHeightControlDelta  == nil then
+		return
+	end
+
 	--if self:getIsActiveForInput() then
 	if CutterAttacherHeight.showKeys( self ) then
 		if InputBinding.hasEvent(InputBinding.ZZZ_CAH_TOGGLE) then
@@ -99,7 +104,8 @@ function CutterAttacherHeight:update(dt)
 
 	if      self.attacherVehicle                     ~= nil 
 			and self.attacherVehicle.attacherJoints      ~= nil
-			and self.attacherVehicleJointDescIndex       ~= nil then
+			and self.attacherVehicleJointDescIndex       ~= nil 
+			and self.attacherVehicle.attacherJoints[self.attacherVehicleJointDescIndex] ~= nil then
 		local jointDescIndex = self.attacherVehicleJointDescIndex
 		local jointDesc      = self.attacherVehicle.attacherJoints[jointDescIndex]
 		local eps            = 1E-3
@@ -127,8 +133,8 @@ function CutterAttacherHeight:update(dt)
 				end
 			end
 			
-			local delta          = 0.8 * dt / jointDesc.moveTime
-			local factor         = 3.0 * dt / jointDesc.moveTime
+			local delta          = 0.25 * dt / jointDesc.moveTime
+			local factor         = 5.00 * dt / jointDesc.moveTime
 				
 			if      ( math.abs( self.attacherVehicle.attacherJoints[self.attacherVehicleJointDescIndex].moveAlpha 
 												- self.attacherVehicle.attacherJoints[self.attacherVehicleJointDescIndex].lowerAlpha ) <= eps
@@ -165,7 +171,7 @@ function CutterAttacherHeight:update(dt)
 					
 					local diff = self.cutterAttacherHeightBaseHeight + self.cutterAttacherHeightControlDelta - t / n --tMin
 					if math.abs( diff ) > eps then
-						jointDesc.lowerAlpha = Utils.clamp( jointDesc.lowerAlpha - Utils.clamp(diff * factor,-delta,delta), self.cutterAttacherHeightMinAlpha, self.cutterAttacherHeightMaxAlpha )
+						jointDesc.lowerAlpha = Utils.clamp( jointDesc.lowerAlpha - Utils.clamp( diff * factor,-delta,delta), self.cutterAttacherHeightMinAlpha, self.cutterAttacherHeightMaxAlpha )
 						CutterAttacherHeight.updateJointDesc( self, self.attacherVehicle, jointDesc, dt )
 					end
 				end
@@ -185,18 +191,28 @@ end
 -- updateJointDesc
 ------------------------------------------------------------------------
 function CutterAttacherHeight:updateJointDesc( vehicle, jointDesc, dt )
-	jointDesc.moveAlpha  = Utils.getMovedLimitedValue(jointDesc.moveAlpha, jointDesc.lowerAlpha, jointDesc.upperAlpha, jointDesc.moveTime, dt, not jointDesc.moveDown)
-	if jointDesc.rotationNode ~= nil then
-		setRotation(jointDesc.rotationNode, Utils.vector3ArrayLerp(jointDesc.minRot, jointDesc.maxRot, jointDesc.moveAlpha))
+	jointDesc.moveAlpha  = Utils.getMovedLimitedValue( jointDesc.moveAlpha, jointDesc.lowerAlpha, jointDesc.upperAlpha, jointDesc.moveTime, dt, not jointDesc.moveDown)
+
+  if jointDesc.rotationNode ~= nil then
+		setRotation(jointDesc.rotationNode, Utils.vector3ArrayLerp(jointDesc.upperRotation, jointDesc.lowerRotation, jointDesc.moveAlpha));
 	end
 	if jointDesc.rotationNode2 ~= nil then
-		setRotation(jointDesc.rotationNode2, Utils.vector3ArrayLerp(jointDesc.minRot2, jointDesc.maxRot2, jointDesc.moveAlpha))
+		setRotation(jointDesc.rotationNode2, Utils.vector3ArrayLerp(jointDesc.upperRotation2, jointDesc.lowerRotation2, jointDesc.moveAlpha));
 	end
-	vehicle:updateAttacherJointRotation(jointDesc, self)
+
+	vehicle:updateAttacherJointRotation( jointDesc, self )
+	
 	jointDesc.jointFrameInvalid = false
-	if self.isServer then
+	if vehicle.isServer then
 		setJointFrame(jointDesc.jointIndex, 0, jointDesc.jointTransform)
 	end
+	
+	if      vehicle:getIsActiveForSound() 
+			and vehicle.sampleHydraulic        ~= nil 
+			and vehicle.sampleHydraulic.sample ~= nil
+			and not vehicle.sampleHydraulic.isPlaying then
+		SoundUtil.playSample(vehicle.sampleHydraulic, 0, 0, nil);
+	end	
 end
 
 ------------------------------------------------------------------------
@@ -239,9 +255,9 @@ function CutterAttacherHeight:onSetLowered(lowered)
 end
 
 ------------------------------------------------------------------------
--- onAttached
+-- onAttach
 ------------------------------------------------------------------------
-function CutterAttacherHeight:onAttached(attacherVehicle, jointDescIndex)
+function CutterAttacherHeight:onAttach(attacherVehicle, jointDescIndex)
 	--self.cutterAttacherHeightBaseHeight  = nil
 	self.attacherVehicleJointDescIndex   = jointDescIndex
 	self.onAttachedTime                  = g_currentMission.time

@@ -63,8 +63,8 @@ function CutterAttacherHeightRegister:add()
 		end;
 	end;
 	
-	g_i18n.globalI18N.texts["ZZZ_CAH_UP"]   = g_i18n:getText("ZZZ_CAH_UP");
-	g_i18n.globalI18N.texts["ZZZ_CAH_DOWN"] = g_i18n:getText("ZZZ_CAH_DOWN");
+	g_i18n.globalI18N.texts["ZZZ_CAH_UP"]   = g_i18n:getText("input_ZZZ_CAH_UP");
+	g_i18n.globalI18N.texts["ZZZ_CAH_DOWN"] = g_i18n:getText("input_ZZZ_CAH_DOWN");
 	g_i18n.globalI18N.texts["ZZZ_CAH_ON"]   = g_i18n:getText("ZZZ_CAH_ON");
 	g_i18n.globalI18N.texts["ZZZ_CAH_OFF"]  = g_i18n:getText("ZZZ_CAH_OFF");
 	
