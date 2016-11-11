@@ -34,7 +34,7 @@ function CutterAttacherHeight:load(saveGame)
 	self.cutterAttacherHeightBaseHeight    = nil
 	self.cutterAttacherHeightMinHeight     = -0.20
 	self.cutterAttacherHeightMaxHeight     =  0.50
-	self.cutterAttacherHeightMinAlpha      = -0.20
+	self.cutterAttacherHeightMinAlpha      =  0.0
 	self.cutterAttacherHeightMaxAlpha      =  1.0
 
 end

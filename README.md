@@ -1,4 +1,4 @@
-# CutterAttacherHeight for Farming Simulator 2015
+# CutterAttacherHeight for Farming Simulator 2017
 
 ## Description
 This mod will automatically adjust the cutting height.
