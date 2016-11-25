@@ -133,8 +133,8 @@ function CutterAttacherHeight:update(dt)
 				end
 			end
 			
-			local delta          = 0.25 * dt / jointDesc.moveTime
-			local factor         = 5.00 * dt / jointDesc.moveTime
+			local delta          = 1.00 * dt / jointDesc.moveTime
+			local factor         = 1.00 * dt / jointDesc.moveTime
 				
 			if      ( math.abs( self.attacherVehicle.attacherJoints[self.attacherVehicleJointDescIndex].moveAlpha 
 												- self.attacherVehicle.attacherJoints[self.attacherVehicleJointDescIndex].lowerAlpha ) <= eps
