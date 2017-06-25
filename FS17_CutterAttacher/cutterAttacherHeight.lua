@@ -250,7 +250,7 @@ end
 ------------------------------------------------------------------------
 function CutterAttacherHeight:onSetLowered(lowered)
 	if      self.attacherVehicle ~= nil then
-		CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightIsLowered", lowered, false)
+		CutterAttacherHeight.mbSetState( self,"cutterAttacherHeightIsLowered", lowered, true)
 	end
 end
 
